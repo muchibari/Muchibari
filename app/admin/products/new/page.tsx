@@ -18,9 +18,10 @@ export default function NewProductPage() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    supabase.from('categories').select('*').then(({ data }) => {
-      setCategories(data ?? [])
-    })
+   supabase.from('categories').select('*').then(({ data, error }) => {
+  if (error) console.error('Categories fetch error:', error)
+  setCategories(data ?? [])
+})
   }, [])
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
