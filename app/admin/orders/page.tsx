@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabase-server'
-import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { UpdateOrderStatus } from '@/components/update-order-status'
 
@@ -12,7 +11,7 @@ export default async function AdminOrdersPage() {
   const { data: profile } = await sb.from('profiles').select('is_admin').eq('id', user.id).single()
   if (!profile?.is_admin) redirect('/')
 
-  const { data: orders } = await supabase
+  const { data: orders } = await sb
     .from('orders')
     .select('*, profiles(full_name), order_items(*, products(name))')
     .order('created_at', { ascending: false })
