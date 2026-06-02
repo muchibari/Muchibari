@@ -10,18 +10,22 @@ export default function NewProductPage() {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
+  const [originalPrice, setOriginalPrice] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [categories, setCategories] = useState<any[]>([])
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState('')
+  const [sizes, setSizes] = useState('')
+  const [colors, setColors] = useState('')
+  const [isHotDeal, setIsHotDeal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
-   supabase.from('categories').select('*').then(({ data, error }) => {
-  if (error) console.error('Categories fetch error:', error)
-  setCategories(data ?? [])
-})
+    supabase.from('categories').select('*').then(({ data, error }) => {
+      if (error) console.error('Categories fetch error:', error)
+      setCategories(data ?? [])
+    })
   }, [])
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -61,9 +65,13 @@ export default function NewProductPage() {
       name,
       description,
       price: parseFloat(price),
+      original_price: originalPrice ? parseFloat(originalPrice) : null,
       category_id: categoryId ? parseInt(categoryId) : null,
       image_url,
       in_stock: true,
+      sizes: sizes.trim() || null,
+      colors: colors.trim() || null,
+      is_hot_deal: isHotDeal,
     })
 
     if (insertError) {
@@ -73,6 +81,10 @@ export default function NewProductPage() {
       router.push('/admin/products')
     }
   }
+
+  const discount = originalPrice && price
+    ? Math.round(((parseFloat(originalPrice) - parseFloat(price)) / parseFloat(originalPrice)) * 100)
+    : 0
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] p-6">
@@ -97,11 +109,31 @@ export default function NewProductPage() {
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#C4874A]" />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Price (৳)</label>
-            <input type="number" value={price} onChange={e => setPrice(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#C4874A]" />
+          {/* Price Row */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Price (৳) *</label>
+              <input type="number" value={price} onChange={e => setPrice(e.target.value)}
+                placeholder="e.g. 2500"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#C4874A]" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Original Price (৳)
+                <span className="text-gray-400 font-normal ml-1">optional</span>
+              </label>
+              <input type="number" value={originalPrice} onChange={e => setOriginalPrice(e.target.value)}
+                placeholder="e.g. 3500"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#C4874A]" />
+            </div>
           </div>
+
+          {/* Discount preview */}
+          {discount > 0 && (
+            <p className="text-sm text-green-600 font-medium">
+              ✓ This product will show a <span className="font-bold">{discount}% OFF</span> tag
+            </p>
+          )}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
@@ -114,6 +146,44 @@ export default function NewProductPage() {
             </select>
           </div>
 
+          {/* Sizes */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Sizes
+              <span className="text-gray-400 font-normal ml-1">optional — comma separated</span>
+            </label>
+            <input type="text" value={sizes} onChange={e => setSizes(e.target.value)}
+              placeholder="e.g. 39,40,41,42,43"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#C4874A]" />
+          </div>
+
+          {/* Colors */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Colors
+              <span className="text-gray-400 font-normal ml-1">optional — comma separated</span>
+            </label>
+            <input type="text" value={colors} onChange={e => setColors(e.target.value)}
+              placeholder="e.g. Black,Brown,Tan"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#C4874A]" />
+          </div>
+
+          {/* Hot Deal Toggle */}
+          <div className="flex items-center justify-between bg-orange-50 border border-orange-200 rounded-lg px-4 py-3">
+            <div>
+              <p className="text-sm font-medium text-gray-700">🔥 Hot Deal</p>
+              <p className="text-xs text-gray-400 mt-0.5">Show this product in the Hot Deals slider on homepage</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsHotDeal(!isHotDeal)}
+              className={`relative w-12 h-6 rounded-full transition-colors ${isHotDeal ? 'bg-orange-500' : 'bg-gray-300'}`}
+            >
+              <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${isHotDeal ? 'translate-x-7' : 'translate-x-1'}`} />
+            </button>
+          </div>
+
+          {/* Image */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
             <input type="file" accept="image/*" onChange={handleImageChange}
@@ -124,7 +194,7 @@ export default function NewProductPage() {
             )}
           </div>
 
-          <button onClick={handleSubmit} disabled={loading}
+          <button onClick={handleSubmit} disabled={loading || !name || !price}
             className="w-full bg-[#5C3317] text-white py-3 rounded-lg font-semibold hover:bg-[#C4874A] transition-colors disabled:opacity-50">
             {loading ? 'Adding...' : 'Add Product'}
           </button>

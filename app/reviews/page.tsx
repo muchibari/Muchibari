@@ -1,17 +1,42 @@
 import Link from 'next/link'
 import { ArrowRight, Star } from 'lucide-react'
-import { reviews, getWhatsAppLink } from '@/lib/data'
+import { getWhatsAppLink } from '@/lib/data'
 import { ReviewCard } from '@/components/review-card'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
-export default function ReviewsPage() {
-  const averageRating = (
-    reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
-  ).toFixed(1)
+export default async function ReviewsPage() {
+  const cookieStore = await cookies()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { cookies: { get: (name) => cookieStore.get(name)?.value } }
+  )
+
+  const { data: rawReviews } = await supabase
+    .from('reviews')
+    .select('id, rating, comment, created_at, profiles(full_name)')
+    .eq('approved', true)
+    .order('created_at', { ascending: false })
+
+  const reviews = (rawReviews ?? []).map((r: any) => ({
+    id: r.id,
+    name: r.profiles?.full_name ?? 'Anonymous',
+    rating: r.rating,
+    comment: r.comment,
+    date: r.created_at,
+  }))
+
+  const averageRating = reviews.length
+    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
+    : '0.0'
 
   const ratingDistribution = [5, 4, 3, 2, 1].map((rating) => ({
     rating,
     count: reviews.filter((r) => r.rating === rating).length,
-    percentage: (reviews.filter((r) => r.rating === rating).length / reviews.length) * 100,
+    percentage: reviews.length
+      ? (reviews.filter((r) => r.rating === rating).length / reviews.length) * 100
+      : 0,
   }))
 
   return (
@@ -38,10 +63,7 @@ export default function ReviewsPage() {
                 <div>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
-                        key={star}
-                        className="w-6 h-6 fill-secondary text-secondary"
-                      />
+                      <Star key={star} className="w-6 h-6 fill-secondary text-secondary" />
                     ))}
                   </div>
                   <p className="text-muted-foreground text-sm mt-1">
@@ -50,7 +72,7 @@ export default function ReviewsPage() {
                 </div>
               </div>
               <p className="mt-4 text-muted-foreground">
-                আমাদের ক্রেতাদের সন্তুষ্টি আমাদের সাফল্যের মাপকাঠি। প্রতিটি রিভিউ আমাদের 
+                আমাদের ক্রেতাদের সন্তুষ্টি আমাদের সাফল্যের মাপকাঠি। প্রতিটি রিভিউ আমাদের
                 আরও ভালো হতে অনুপ্রাণিত করে।
               </p>
             </div>
@@ -75,11 +97,17 @@ export default function ReviewsPage() {
         </div>
 
         {/* Reviews Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
-        </div>
+        {reviews.length === 0 ? (
+          <div className="text-center text-muted-foreground py-12">
+            No approved reviews yet.
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </div>
+        )}
 
         {/* CTA Section */}
         <div className="mt-16 bg-muted rounded-2xl p-8 lg:p-12 text-center">
@@ -91,8 +119,8 @@ export default function ReviewsPage() {
             WhatsApp-এ আমাদের রিভিউ পাঠান!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <a
-              href={getWhatsAppLink('Hi, I want to share my review for MuchiBari!')}
+            
+            <a  href={getWhatsAppLink('Hi, I want to share my review for Muchi Bari!')}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#25D366]/90 transition-colors"

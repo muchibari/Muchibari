@@ -8,16 +8,20 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter, usePathname } from 'next/navigation'
 
-const categories = [
-  'Casual Shoes', 'Oxford Shoes', 'Loafer Shoes', 'Formal Shoes',
-  'Boots', 'Ladies Shoes', 'Winter Collection', 'Flat Sandals', 'Belts'
-]
+
 
 export function Header() {
   const router = useRouter()
   const pathname = usePathname()
   const [user, setUser] = useState<any>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [categories, setCategories] = useState<{ name: string; slug: string }[]>([])
+
+useEffect(() => {
+  supabase.from('categories').select('name, slug').then(({ data }) => {
+    if (data) setCategories(data)
+  })
+}, [])
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -57,20 +61,16 @@ export function Header() {
               />
             </Link>
 
-            {/* Right: Call + Profile */}
-            <div className="flex items-center gap-3">
-              <a href={`tel:${WHATSAPP_NUMBER}`} className="p-2 text-primary">
-                <Phone className="w-5 h-5" />
+
+            {/* Right: Call button */}
+            <div className="flex items-center">
+
+              <a  href={`tel:${WHATSAPP_NUMBER}`}
+                className="flex items-center gap-2 bg-primary text-white px-3 py-2 rounded-lg text-sm font-medium shadow-sm hover:opacity-90 transition-opacity"
+              >
+                <Phone className="w-4 h-4" />
+                <span>Call Us</span>
               </a>
-              {user ? (
-                <button onClick={handleLogout} className="p-2 text-foreground/60 hover:text-red-500 transition-colors">
-                  <UserCircle className="w-6 h-6" />
-                </button>
-              ) : (
-                <Link href="/auth/login" className="p-2 text-foreground/60 hover:text-primary transition-colors">
-                  <UserCircle className="w-6 h-6" />
-                </Link>
-              )}
             </div>
           </div>
         </div>
@@ -84,12 +84,12 @@ export function Header() {
           {/* Drawer */}
           <div className="relative bg-white w-72 h-full shadow-xl flex flex-col">
             <div className="flex items-center justify-between p-4 border-b">
-              <span className="font-bold text-lg text-[#5C3317]">Categories</span>
+              <span className="font-bold text-lg text-[#5C3317]">Muchi Bari</span>
               <button onClick={() => setDrawerOpen(false)}>
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <nav className="flex flex-col p-4 gap-1">
+            <nav className="flex flex-col p-4 gap-1 overflow-y-auto flex-1">
               <Link href="/" onClick={() => setDrawerOpen(false)}
                 className="py-3 px-4 rounded-lg hover:bg-[#FAF5EF] text-foreground font-medium transition-colors">
                 Home
@@ -98,14 +98,23 @@ export function Header() {
                 className="py-3 px-4 rounded-lg hover:bg-[#FAF5EF] text-foreground font-medium transition-colors">
                 Shop
               </Link>
+              <Link href="/reviews" onClick={() => setDrawerOpen(false)}
+                className="py-3 px-4 rounded-lg hover:bg-[#FAF5EF] text-foreground font-medium transition-colors">
+                Reviews
+              </Link>
+              <Link href="/about" onClick={() => setDrawerOpen(false)}
+                className="py-3 px-4 rounded-lg hover:bg-[#FAF5EF] text-foreground font-medium transition-colors">
+                About Us
+              </Link>
               <div className="border-t my-2" />
+              <span className="px-4 py-1 text-sm font-bold text-[#5C3317]">Categories</span>
               {categories.map((cat) => (
                 <Link
-                  key={cat}
-                  href={`/shop?category=${cat.toLowerCase().replace(/ /g, '-')}`}
+                  key={cat.slug}
+                  href={`/shop?category=${cat.slug}`}
                   onClick={() => setDrawerOpen(false)}
                   className="py-3 px-4 rounded-lg hover:bg-[#FAF5EF] text-foreground/80 transition-colors">
-                  {cat}
+                  {cat.name}
                 </Link>
               ))}
             </nav>

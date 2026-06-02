@@ -10,7 +10,7 @@ export default function AboutPage() {
       <section className="bg-primary py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-serif text-3xl lg:text-5xl font-bold text-primary-foreground">
-            About MuchiBari
+            About Muchi Bari
           </h1>
           <p className="mt-4 text-xl text-primary-foreground/80 max-w-2xl mx-auto">
             আমাদের সম্পর্কে জানুন
@@ -37,7 +37,7 @@ export default function AboutPage() {
               </h2>
               <div className="mt-6 space-y-4 text-foreground/80 leading-relaxed">
                 <p>
-                  MuchiBari was born from a deep appreciation for the timeless art of leather 
+                  Muchi Bari was born from a deep appreciation for the timeless art of leather 
                   craftsmanship. In a world of mass-produced goods, we set out to preserve and 
                   celebrate the skills of traditional artisans while meeting the needs of modern consumers.
                 </p>
@@ -82,7 +82,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   {"\""}Quality is not just about materials—it{"'"}s about the love and care put into every 
-                  stitch, every cut, every finish. That{"'"}s what MuchiBari represents.{"\""}
+                  stitch, every cut, every finish. That{"'"}s what Muchi Bari represents.{"\""}
                 </p>
               </div>
             </div>
@@ -201,7 +201,7 @@ export default function AboutPage() {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <a
-              href={getWhatsAppLink('Hi, I have a question about MuchiBari')}
+              href={getWhatsAppLink('Hi, I have a question about Muchi Bari')}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-primary-foreground/10 text-primary-foreground border border-primary-foreground/30 px-8 py-4 rounded-lg font-semibold hover:bg-primary-foreground/20 transition-colors"

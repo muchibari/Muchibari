@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Phone, MapPin, Mail, Facebook, Instagram } from 'lucide-react'
+import { Phone, MapPin, Mail, Facebook, Instagram} from 'lucide-react'
 import { WHATSAPP_NUMBER } from '@/lib/data'
 
 export function Footer() {
@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <Image src="/images/logo.png" alt="MuchiBari" width={140} height={40}
+            <Image src="/images/logoWhite.png" alt="Muchi Bari" width={140} height={40}
               className="h-10 w-auto brightness-0 invert" />
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               প্রিমিয়াম লেদার প্রোডাক্টের জন্য বিশ্বস্ত ঠিকানা। হাতে তৈরি, মানসম্মত এবং দীর্ঘস্থায়ী।
@@ -46,11 +46,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/80">
                 <Mail className="w-4 h-4 flex-shrink-0" />
-                <a href="mailto:contact@muchibari.com" className="hover:text-primary-foreground transition-colors">contact@muchibari.com</a>
+                <a href="mailto:muchibari01@gmail.com" className="hover:text-primary-foreground transition-colors">muchibari01@gmail.com</a>
               </li>
               <li className="flex items-start gap-2 text-primary-foreground/80">
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-1" />
-                <span>Dhaka, Bangladesh</span>
+                <span>44/1 Sher-E-Bangla Road, Leather Market, Hazaribag Dhaka- 1209, Dhaka, Bangladesh</span>
               </li>
             </ul>
           </div>
@@ -60,8 +60,8 @@ export function Footer() {
             <h3 className="font-semibold text-lg mb-4">Follow Us</h3>
             <div className="flex items-center gap-4">
               {[
-                { href: 'https://facebook.com/muchibari', Icon: Facebook, label: 'Facebook' },
-                { href: 'https://instagram.com/muchibari', Icon: Instagram, label: 'Instagram' },
+                { href: 'https://www.facebook.com/people/Muchi-Bari/61577390296585/', Icon: Facebook, label: 'Facebook' },
+                { href: 'https://www.instagram.com/muchi_bari/', Icon: Instagram, label: 'Instagram' },
               ].map(({ href, Icon, label }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                   className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
@@ -73,7 +73,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-primary-foreground/20 text-center text-primary-foreground/60 text-sm">
-          <p>&copy; {new Date().getFullYear()} MuchiBari. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Muchi Bari. All rights reserved.</p>
         </div>
       </div>
     </footer>

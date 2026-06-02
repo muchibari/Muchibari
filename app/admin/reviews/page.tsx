@@ -3,6 +3,7 @@ import { createSupabaseServer } from '@/lib/supabase-server'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { ToggleReviewApproval } from '@/components/toggle-review-approval'
+import { DeleteReviewButton } from '@/components/delete-review-button'
 
 export default async function AdminReviewsPage() {
   const sb = await createSupabaseServer()
@@ -42,7 +43,10 @@ export default async function AdminReviewsPage() {
                   <p className="text-sm text-gray-600 mt-2">{review.comment}</p>
                   <p className="text-xs text-gray-400 mt-1">{new Date(review.created_at).toLocaleDateString()}</p>
                 </div>
-                <ToggleReviewApproval id={review.id} approved={review.approved} />
+                <div className="flex flex-col items-end gap-2">
+                  <ToggleReviewApproval id={review.id} approved={review.approved} />
+                  <DeleteReviewButton id={review.id} />
+                </div>
               </div>
             </div>
           ))
