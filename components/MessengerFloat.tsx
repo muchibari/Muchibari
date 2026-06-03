@@ -8,11 +8,12 @@ export default function MessengerFloat() {
 
   return (
     
-    <a  href="https://www.messenger.com/t/61577390296585"
-      target="_blank"
-      rel="noopener noreferrer"
-     style={{ position: 'fixed', bottom: '80px', right: '16px' }}>
-      <FaFacebookMessenger className="w-9 h-9 "  style={{ color: '#0084FF' }} size={24} />
-    </a>
+    <a href="https://www.messenger.com/t/61577390296585"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ position: 'fixed', bottom: '80px', right: '16px' }}
+  className="bg-white rounded-full shadow-lg p-2 flex items-center justify-center">
+  <FaFacebookMessenger style={{ color: '#0084FF' }} size={28} />
+</a>
   )
 }
