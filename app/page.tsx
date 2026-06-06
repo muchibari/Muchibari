@@ -17,6 +17,8 @@ const categoryEmojis: Record<string, string> = {
 
 export default async function HomePage() {
   const supabase = await createSupabaseServer()
+const { data: bannerData } = await supabase.from('hero_banner').select('mobile_image_url, desktop_image_url').eq('id', 1).single()
+  const bannerUrl = bannerData?.mobile_image_url ?? bannerData?.desktop_image_url ?? null
 
   const { data: categories } = await supabase.from('categories').select('*')
 
@@ -56,22 +58,38 @@ export default async function HomePage() {
         </div>
       </Link>
 
-      {/* Hero Banner */}
-      <div className="mx-4 mt-4 rounded-2xl overflow-hidden bg-gradient-to-r from-[#5C3317] to-[#C4874A] p-6 flex items-center justify-between min-h-[140px]">
-        <div>
-          <p className="text-white/80 text-sm">Best Choice</p>
-          <h2 className="text-white font-bold text-2xl leading-tight">Premium<br />Leather Goods</h2>
-          <div className="mt-2 bg-white/20 rounded-lg px-3 py-1 inline-block">
-            <span className="text-white font-bold text-lg">Up to 50% OFF</span>
-          </div>
-          <div className="mt-3">
-            <Link href="/shop" className="bg-white text-[#5C3317] text-sm font-semibold px-4 py-2 rounded-lg inline-block">
-              Shop Now
-            </Link>
-          </div>
-        </div>
-        <div className="text-6xl">🥿</div>
+
+{/* Hero Banner */}
+{bannerData?.mobile_image_url || bannerData?.desktop_image_url ? (
+  <>
+    {bannerData.mobile_image_url && (
+      <Link href="/shop" className="mx-4 mt-4 rounded-2xl overflow-hidden md:hidden block">
+        <img src={bannerData.mobile_image_url} alt="Banner" className="w-full object-cover" />
+      </Link>
+    )}
+    {bannerData.desktop_image_url && (
+      <Link href="/shop" className="mx-4 mt-4 rounded-2xl overflow-hidden hidden md:block">
+        <img src={bannerData.desktop_image_url} alt="Banner" className="w-full object-cover" />
+      </Link>
+    )}
+  </>
+) : (
+  <div className="mx-4 mt-4 rounded-2xl overflow-hidden bg-gradient-to-r from-[#5C3317] to-[#C4874A] p-6 flex items-center justify-between min-h-[140px]">
+    <div>
+      <p className="text-white/80 text-sm">Best Choice</p>
+      <h2 className="text-white font-bold text-2xl leading-tight">Premium<br />Leather Goods</h2>
+      <div className="mt-2 bg-white/20 rounded-lg px-3 py-1 inline-block">
+        <span className="text-white font-bold text-lg">Up to 50% OFF</span>
       </div>
+      <div className="mt-3">
+        <Link href="/shop" className="bg-white text-[#5C3317] text-sm font-semibold px-4 py-2 rounded-lg inline-block">
+          Shop Now
+        </Link>
+      </div>
+    </div>
+    <div className="text-6xl">🥿</div>
+  </div>
+)}
 
       {/* Category Slider */}
       <div className="mt-6 px-4">
@@ -79,11 +97,15 @@ export default async function HomePage() {
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {(categories ?? []).map((cat) => (
             <Link key={cat.slug}
-              href={`/shop?category=${cat.slug}`}
-              className="flex-shrink-0 flex flex-col items-center gap-2 bg-white rounded-xl p-3 shadow-sm w-24 hover:shadow-md transition-shadow">
-              <span className="text-3xl">{categoryEmojis[cat.slug] ?? '👟'}</span>
-              <span className="text-xs text-center text-gray-700 font-medium leading-tight">{cat.name}</span>
-            </Link>
+  href={`/shop?category=${cat.slug}`}
+  className="flex-shrink-0 flex flex-col items-center gap-2 bg-white rounded-xl p-3 shadow-sm w-24 hover:shadow-md transition-shadow">
+  {cat.image_url ? (
+    <img src={cat.image_url} alt={cat.name} className="w-12 h-12 object-cover rounded-lg" />
+  ) : (
+    <span className="text-3xl">{categoryEmojis[cat.slug] ?? '👟'}</span>
+  )}
+  <span className="text-xs text-center text-gray-700 font-medium leading-tight">{cat.name}</span>
+</Link>
           ))}
         </div>
       </div>

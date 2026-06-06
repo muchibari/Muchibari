@@ -103,21 +103,38 @@ function ShopContent() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {products.map((product) => (
               <Link key={product.id} href={`/shop/${product.id}`}
-                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                {product.image_url ? (
-                  <img src={product.image_url} alt={product.name}
-                    className="w-full aspect-square object-cover" />
-                ) : (
-                  <div className="w-full aspect-square bg-gray-100 flex items-center justify-center text-4xl">👟</div>
-                )}
+  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+  <div className="relative">
+    {product.image_url ? (
+      <img src={product.image_url} alt={product.name}
+        className="w-full aspect-square object-cover" />
+    ) : (
+      <div className="w-full aspect-square bg-gray-100 flex items-center justify-center text-4xl">👟</div>
+    )}
+    {product.original_price && product.original_price > product.price && (
+      <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+        {Math.round(((product.original_price - product.price) / product.original_price) * 100)}% OFF
+      </span>
+    )}
+  </div>
                 <div className="p-3">
-                  <p className="text-sm font-semibold text-gray-800 truncate">{product.name}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{product.categories?.name}</p>
-                  <p className="text-base font-bold text-[#5C3317] mt-1">৳{product.price}</p>
-                  <button className="w-full mt-2 bg-[#5C3317] text-white text-xs py-2 rounded-lg hover:bg-[#C4874A] transition-colors">
-                    Order Now
-                  </button>
-                </div>
+  <p className="text-sm font-semibold text-gray-800 truncate">{product.name}</p>
+  <p className="text-xs text-gray-400 mt-0.5">{product.categories?.name}</p>
+  <div className="mt-1">
+    {product.original_price && product.original_price > product.price && (
+      <div className="flex items-center gap-1.5 mb-0.5">
+        <p className="text-xs text-gray-400 line-through">৳{product.original_price}</p>
+        <span className="text-xs font-bold text-red-500">
+          {Math.round(((product.original_price - product.price) / product.original_price) * 100)}% OFF
+        </span>
+      </div>
+    )}
+    <p className="text-base font-bold text-[#5C3317]">৳{product.price}</p>
+  </div>
+  <button className="w-full mt-2 bg-[#5C3317] text-white text-xs py-2 rounded-lg hover:bg-[#C4874A] transition-colors">
+    Order Now
+  </button>
+</div>
               </Link>
             ))}
           </div>

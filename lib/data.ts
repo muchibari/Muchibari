@@ -147,5 +147,5 @@ export const WHATSAPP_NUMBER = '+8801969592755'
 
 export function getWhatsAppLink(message: string): string {
   const encodedMessage = encodeURIComponent(message)
-  return `https://wa.me/88${WHATSAPP_NUMBER}?text=${encodedMessage}`
+  return `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodedMessage}`
 }

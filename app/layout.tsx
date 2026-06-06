@@ -19,7 +19,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'MuchiBari - Premium Leather Goods',
+  title: 'Muchi Bari',
   description: 'Handcrafted leather sandals and accessories. Quality craftsmanship meets timeless style.',
   keywords: ['leather sandals', 'leather goods', 'handcrafted', 'premium footwear', 'Bangladesh'],
 }

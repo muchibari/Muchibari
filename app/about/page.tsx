@@ -37,14 +37,10 @@ export default function AboutPage() {
               </h2>
               <div className="mt-6 space-y-4 text-foreground/80 leading-relaxed">
                 <p>
-                  Muchi Bari was born from a deep appreciation for the timeless art of leather 
-                  craftsmanship. In a world of mass-produced goods, we set out to preserve and 
-                  celebrate the skills of traditional artisans while meeting the needs of modern consumers.
+                  Muchi Bari, customer satisfaction is at the heart of everything we do. We believe that our greatest achievement is not just creating premium leather products, but earning the trust and happiness of every customer we serve.
                 </p>
                 <p>
-                  মুচিবাড়ি শুরু হয়েছিল লেদার শিল্পের প্রতি গভীর ভালোবাসা থেকে। যেখানে সবাই 
-                  মেশিনে তৈরি পণ্য বিক্রি করছে, সেখানে আমরা ঐতিহ্যবাহী কারিগরদের হাতের কাজকে 
-                  সম্মান জানাতে চেয়েছি।
+                  Our vision is to deliver exceptional craftsmanship, uncompromising quality, and lasting comfort through every product we create. By combining authentic materials with skilled workmanship, we strive to build a brand that customers can rely on with confidence.
                 </p>
                 <p>
                   Each pair of sandals, each belt, each wallet that leaves our workshop carries with 
@@ -52,8 +48,7 @@ export default function AboutPage() {
                   we stand behind.
                 </p>
                 <p>
-                  প্রতিটি পণ্যে আমাদের কারিগরদের ঘণ্টার পর ঘণ্টা পরিশ্রম, যত্ন এবং মানের প্রতিশ্রুতি 
-                  জড়িয়ে আছে।
+                  At Muchi Bari, your satisfaction is our success, and your trust is our inspiration to keep improving every day.
                 </p>
               </div>
             </div>
@@ -62,41 +57,77 @@ export default function AboutPage() {
       </section>
 
       {/* Owner Section */}
-      <section className="py-16 lg:py-24 bg-muted">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <span className="text-secondary font-semibold">The Founder</span>
-              <h2 className="font-serif text-3xl lg:text-4xl font-bold text-foreground mt-2">
-                A Vision for Quality
-              </h2>
-              <div className="mt-6 space-y-4 text-foreground/80 leading-relaxed">
-                <p>
-                  Our founder grew up watching skilled artisans transform raw leather into 
-                  beautiful, functional pieces. This childhood fascination evolved into a 
-                  mission: to bring authentic leather craftsmanship to every home in Bangladesh.
-                </p>
-                <p>
-                  আমাদের প্রতিষ্ঠাতা ছোটবেলা থেকেই দেখেছেন কিভাবে দক্ষ কারিগররা সাধারণ চামড়াকে 
-                  সুন্দর পণ্যে রূপান্তরিত করেন। সেই মুগ্ধতা থেকেই জন্ম নিয়েছে মুচিবাড়ি।
-                </p>
-                <p>
-                  {"\""}Quality is not just about materials—it{"'"}s about the love and care put into every 
-                  stitch, every cut, every finish. That{"'"}s what Muchi Bari represents.{"\""}
-                </p>
-              </div>
-            </div>
-            <div className="order-1 lg:order-2 relative aspect-square lg:aspect-auto lg:h-[500px] rounded-2xl overflow-hidden bg-card flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                  <Users className="w-16 h-16 text-primary" />
-                </div>
-                <p className="mt-4 text-muted-foreground">Founder Photo</p>
-              </div>
-            </div>
+<section className="py-16 lg:py-24 bg-muted">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="order-2 lg:order-1">
+        <span className="text-secondary font-semibold">The Founder</span>
+        <h2 className="font-serif text-3xl lg:text-4xl font-bold text-foreground mt-2">
+          Engr. Md. Shah Alam
+        </h2>
+
+        <div className="mt-4 space-y-1">
+          <p className="text-sm font-semibold text-secondary">Founder & Managing Partner</p>
+          <p className="text-sm text-foreground/70">BSc in Leather Engineering, ILET, University of Dhaka</p>
+        </div>
+
+        <div className="mt-5 space-y-3">
+          <div>
+            <p className="text-sm font-semibold text-foreground">Managing Partner, Glorious Trade International</p>
+            <ul className="mt-1 space-y-0.5 text-sm text-foreground/70 list-disc list-inside ml-1">
+              <li>Sole Agent, Alcoven, Spain</li>
+              <li>All kinds of L/R Chemical Indentor & Importer</li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-foreground">Proprietor, S. Alam Corporation</p>
+            <ul className="mt-1 space-y-0.5 text-sm text-foreground/70 list-disc list-inside ml-1">
+              <li>Leather Buying, 1st Class Contractor, Supplier & Importer</li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-foreground">Senior Joint Secretary</p>
+            <p className="text-sm text-foreground/70 ml-1">Leather Engineers & Technologists Society, Bangladesh</p>
           </div>
         </div>
-      </section>
+      </div>
+
+      <div className="order-1 lg:order-2 relative aspect-square lg:aspect-auto lg:h-[500px] rounded-2xl overflow-hidden">
+        <img
+          src="/founder.jpeg"
+          alt="Engr. Md. Shah Alam"
+          className="w-full h-full object-cover object-top"
+        />
+      </div>
+    </div>
+  </div>
+
+  <section className="py-16 lg:py-24">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="order-1 relative aspect-square lg:aspect-auto lg:h-[500px] rounded-2xl overflow-hidden">
+        <img
+          src="/ceo.jpg"
+          alt="Md. Shakib Alam"
+          className="w-full h-full object-cover object-top"
+        />
+      </div>
+
+      <div className="order-2">
+        <span className="text-secondary font-semibold">The CEO</span>
+        <h2 className="font-serif text-3xl lg:text-4xl font-bold text-foreground mt-2">
+          Md. Shakib Alam
+        </h2>
+
+        <div className="mt-4 space-y-1">
+          <p className="text-sm font-semibold text-secondary">Partner & CEO</p>
+          <p className="text-sm text-foreground/70">BSS in Economics, Dhaka College</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
 
       {/* Values Section */}
       <section className="py-16 lg:py-24">
@@ -106,7 +137,7 @@ export default function AboutPage() {
             <h2 className="font-serif text-3xl lg:text-4xl font-bold text-foreground mt-2">
               What We Stand For
             </h2>
-            <p className="mt-2 text-muted-foreground">আমাদের মূল্যবোধ</p>
+            
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-card p-8 rounded-xl shadow-sm text-center">
@@ -200,9 +231,7 @@ export default function AboutPage() {
               Shop Now
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <a
-              href={getWhatsAppLink('Hi, I have a question about Muchi Bari')}
-              target="_blank"
+            <a href={getWhatsAppLink('Hi, I want to place an order')} target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-primary-foreground/10 text-primary-foreground border border-primary-foreground/30 px-8 py-4 rounded-lg font-semibold hover:bg-primary-foreground/20 transition-colors"
             >

@@ -1,9 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Phone, MapPin, Mail, Facebook, Instagram} from 'lucide-react'
+import { Phone, MapPin, Mail, Facebook, Instagram } from 'lucide-react'
 import { WHATSAPP_NUMBER } from '@/lib/data'
+import { createSupabaseServer } from '@/lib/supabase-server'
 
-export function Footer() {
+export async function Footer() {
+  const supabase = await createSupabaseServer()
+  const { data: categories } = await supabase.from('categories').select('name, slug').limit(3)
+
   return (
     <footer className="bg-primary text-primary-foreground pb-20 md:pb-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -21,18 +25,24 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {[
-                { href: '/shop', label: 'Shop All' },
-                { href: '/shop?category=casual-shoes', label: 'Casual Shoes' },
-                { href: '/shop?category=formal-shoes', label: 'Formal Shoes' },
-                { href: '/about', label: 'About Us' },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-                    {l.label}
+              <li>
+                <Link href="/shop" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  Shop All
+                </Link>
+              </li>
+              {(categories ?? []).map((cat) => (
+                <li key={cat.slug}>
+                  <Link href={`/shop?category=${cat.slug}`}
+                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                    {cat.name}
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/about" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  About Us
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -74,6 +84,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-primary-foreground/20 text-center text-primary-foreground/60 text-sm">
           <p>&copy; {new Date().getFullYear()} Muchi Bari. All rights reserved.</p>
+          <p>Designed and developed by <a href="https://www.facebook.com/webinagency/" className="hover:text-primary-foreground transition-colors">WEBIN</a></p>
         </div>
       </div>
     </footer>
